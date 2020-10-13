@@ -50,3 +50,15 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+*.o
+*.a
+/skynet
+/skynet.pid
+3rd/lua/lua
+3rd/lua/luac
+/cservice
+/luaclib
+*.so
+*.dSYM
+.DS_Store
