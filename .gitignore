@@ -57,6 +57,7 @@ dkms.conf
 /skynet3rd/lua/luac
 /skynet/cservice
 /skynet/luaclib
+/run
 *.so
 *.dSYM
 .DS_Store
