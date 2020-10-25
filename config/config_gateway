@@ -16,6 +16,9 @@ cpath = root.."skynet/cservice/?.so"
 snax = root.."skynet/examples/?.lua;"..root.."skynet/test/?.lua"
 cluster = root.."config/clustername.lua"
 
+gateway_host = "127.0.0.1"
+gateway_port = 8888
+
 if $DAEMON then
 	logger = root .. "run/skynet.log"
 	daemon = root .. "run/skynet.pid"

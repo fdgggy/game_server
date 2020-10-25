@@ -2,7 +2,7 @@ local skynet = require "skynet"
 local sprotoparser = require "sprotoparser"
 local sprotoloader = require "sprotoloader"
 local service = require "service"
-local log = require "log"
+-- local log = require "log"
 
 local loader = {}
 local data = {}
@@ -18,7 +18,7 @@ end
 function loader.load(list)
 	for i, name in ipairs(list) do
 		local p = load(name)
-		log("load proto [%s] in slot %d", name, i)
+		-- log("load proto [%s] in slot %d", name, i)
 		data[name] = i
 		sprotoloader.save(p, i)
 	end

@@ -9,13 +9,15 @@ gateservice = root.."service/gateway/?.lua;"
 
 luaservice = root .. "service/?.lua;"..root.."skynet/service/?.lua;"..root .. "service/?/main.lua;"..gameservice..gateservice
 
-
 lualoader = root .. "skynet/lualib/loader.lua"
 lua_path = root .. "lualib/?.lua;"  .. root.."skynet/lualib/?.lua;"..root.."skynet/lualib/?/init.lua"
 lua_cpath = root .. "skynet/luaclib/?.so"
 cpath = root.."skynet/cservice/?.so"
 snax = root.."skynet/examples/?.lua;"..root.."skynet/test/?.lua"
 cluster = root.."config/clustername.lua"
+
+gateway_host = "127.0.0.1"
+gateway_port = 8888
 
 if $DAEMON then
 	logger = root .. "run/skynet.log"

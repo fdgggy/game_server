@@ -1,11 +1,13 @@
 .package {
 	type 0 : integer
 	session 1 : integer
-	ud 2 : string
 }
 
-push 1 {
+heartbeat 1 {}
+
+common 2 {
 	request {
-		text 0 : string
+		what 0 : string
+		value 1 : integer
 	}
 }

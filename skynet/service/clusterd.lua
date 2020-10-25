@@ -10,6 +10,10 @@ local config = {}
 local nodename = cluster.nodename()
 
 local connecting = {}
+--cluster.reload 也可以接收一个 table 来更新配置，如果你传入了 table，那么 table 内的数据优先级高于配置文件（配置文件被忽略）。
+--如果一开始就没有配置文件，那么必须在使用 cluster 之前用 cluster.reload 传入最初的配置数据。
+--在线上产品中如何向集群中的每个节点分发新的配置文件，skynet 并没有提供方案。但这个方案一般比较容易实现。例如，你可以自己设计一个中心节点用来管理它。
+--或者让系统管理员编写好同步脚本，并给程序加上控制指令来重载这些配置。或不依赖配置文件，而全部用 cluster.reload 来初始化。
 
 local function open_channel(t, key)
 	local ct = connecting[key]

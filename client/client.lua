@@ -6,11 +6,35 @@ if _VERSION ~= "Lua 5.4" then
 end
 
 local socket = require "client.socket"
-local proto = require "proto"
-local sproto = require "sproto"
+-- local proto = require "proto"
+-- local sproto = require "sproto"
+local sprotoparser = require "sprotoparser"
+local sprotoloader = require "sprotoloader"
 
-local host = sproto.new(proto.s2c):host "package"
-local request = host:attach(sproto.new(proto.c2s))
+-- local host = sproto.new(proto.s2c):host "package"
+-- local request = host:attach(sproto.new(proto.c2s))
+
+local function loadx(name)
+	local filename = string.format("proto/%s.sproto", name)
+	local f = assert(io.open(filename), "Can't open " .. name)
+	local t = f:read "a"
+	f:close()
+	return sprotoparser.parse(t)
+end
+
+local function load(list)
+	for i, name in ipairs(list) do
+		local p = loadx(name)
+		sprotoloader.save(p, i)
+	end
+end
+
+load( {
+	"proto.c2s",
+	"proto.s2c",
+})
+host = sprotoloader.load(2):host "package"
+request = host:attach(sprotoloader.load(1))
 
 local fd = assert(socket.connect("127.0.0.1", 8888))
 

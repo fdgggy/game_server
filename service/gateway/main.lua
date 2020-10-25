@@ -6,16 +6,21 @@ local nodename = ...
 skynet.start(function()
 	skynet.error("gate server start!")
 
+	local proto = skynet.uniqueservice "protoloader"
+	skynet.call(proto, "lua", "load", {
+		"proto.c2s",
+		"proto.s2c",
+	})
+
+	local watchdog = skynet.newservice("watchdog")
+	skynet.call(watchdog, "lua", "start", {
+		address = skynet.getenv "gateway_host",
+		port = skynet.getenv "gateway_port",
+		maxclient = 5000,
+		nodelay = true,
+	})
+
 	cluster.open(nodename or skynet.getenv "nodename")
 
-	local proxy = cluster.proxy "game1@sdb"	-- cluster.proxy("db", "@sdb")
-	local largekey = string.rep("X", 128*1024)
-	local largevalue = string.rep("R", 100 * 1024)
-	print("largevalue:"..largevalue)
-
-	skynet.call(proxy, "lua", "SET", largekey, largevalue)
-	local v = skynet.call(proxy, "lua", "GET", largekey)
-	print("---v:"..v)
 	skynet.exit()
-
 end)

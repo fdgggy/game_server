@@ -41,6 +41,14 @@ proto.s2c = sprotoparser.parse [[
 }
 
 heartbeat 1 {}
+
+common 2 {
+	request {
+		what 0 : string
+		value 1 : integer
+	}
+}
+
 ]]
 
 return proto

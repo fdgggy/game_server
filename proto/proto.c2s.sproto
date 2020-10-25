@@ -1,32 +1,28 @@
 .package {
 	type 0 : integer
 	session 1 : integer
-	ud 2 : string
 }
 
-ping 1 {}
+handshake 1 {
+	response {
+		msg 0  : string
+	}
+}
 
-signup 2 {
+get 2 {
 	request {
-		userid 0 : string
+		what 0 : string
 	}
 	response {
-		ok 0 : boolean
+		result 0 : string
 	}
 }
 
-signin 3 {
+set 3 {
 	request {
-		userid 0 : string
-	}
-	response {
-		ok 0 : boolean
+		what 0 : string
+		value 1 : string
 	}
 }
 
-login 4 {
-	response {
-		ok 0 : boolean
-	}
-}
-
+quit 4 {}
