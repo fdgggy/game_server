@@ -9,10 +9,10 @@ do
 			export DAEMON=true
 			;;
 		k)
-			kill `cat $ROOT/run/skynet.pid`
+			kill `cat $ROOT/run/skynet_gateway.pid`
 			exit 0;
 			;;
 	esac
 done
 
-$ROOT/skynet/skynet $ROOT/config
+$ROOT/skynet/skynet $ROOT/config/config_gateway

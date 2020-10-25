@@ -22,6 +22,9 @@ local function open_channel(t, key)
 	ct = {}
 	connecting[key] = ct
 	local address = node_address[key]
+	-- 当一个名字没有配置在配置表中时，如果你向这个未命名节点发送一个请求，skynet 的默认行为是挂起，
+	-- 一直等到这个名字对应项的配置被更新。你可以通过配置节点名字对应的地址为 false 来明确指出这个节点已经下线。
+	-- 另外，可以通过在配置表中插入 __nowaiting = true 来关闭这种挂起行为。
 	if address == nil and not config.nowaiting then
 		local co = coroutine.running()
 		assert(ct.namequery == nil)
@@ -69,6 +72,7 @@ end
 
 local node_channel = setmetatable({}, { __index = open_channel })
 
+--第一次加载时，对集群中节点不会主动建立通道，第一次发送消息时才会建立
 local function loadconfig(tmp)
 	if tmp == nil then
 		tmp = {}
@@ -76,7 +80,7 @@ local function loadconfig(tmp)
 			local f = assert(io.open(config_name))
 			local source = f:read "*a"
 			f:close()
-			assert(load(source, "@"..config_name, "t", tmp))()
+			assert(load(source, "@"..config_name, "t", tmp))()  --load的本质就是在Lua代码中运行一段存储在字符串中的代码
 		end
 	end
 	local reload = {}
@@ -89,7 +93,7 @@ local function loadconfig(tmp)
 			assert(address == false or type(address) == "string")
 			if node_address[name] ~= address then
 				-- address changed
-				if rawget(node_channel, name) then
+				if rawget(node_channel, name) then  --不会访问元表
 					node_channel[name] = nil	-- reset connection
 					table.insert(reload, name)
 				end
