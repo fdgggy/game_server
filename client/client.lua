@@ -122,8 +122,10 @@ local function dispatch_package()
 	end
 end
 
-send_request("handshake")
-send_request("set", { what = "hello", value = "world" })
+-- send_request("handshake")
+-- send_request("set", { what = "hello", value = "world" })
+send_request("game", { what = "hello", value = "world", user = { {userid = 1618, name = "hello kitty", level = 5}} })
+
 while true do
 	dispatch_package()
 	local cmd = socket.readstdin()

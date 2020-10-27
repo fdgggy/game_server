@@ -2,6 +2,7 @@ local skynet = require "skynet"
 require "skynet.manager"	-- import skynet.register
 local cluster = require "skynet.cluster"
 local sprotoloader = require "sprotoloader"
+local print_r = require "print_r"
 
 local db = {}
 local host
@@ -18,6 +19,11 @@ local command = {}
 
 function command.GET(key)
 	return db[key]
+end
+
+function command.GET2(key)
+	print("xxxxxx")
+	print_r(key)
 end
 
 function command.SET(key, value)
