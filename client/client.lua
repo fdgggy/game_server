@@ -39,7 +39,7 @@ request = host:attach(sprotoloader.load(1))
 local fd = assert(socket.connect("127.0.0.1", 8888))
 
 local function send_package(fd, pack)
-	local package = string.pack(">s2", pack)
+	local package = string.pack(">s2", pack)  -->大端，s2长度加内容的字符串，其长度编码为一个 n 字节（默认是个 size_t） 长的无符号整数。
 	socket.send(fd, package)
 end
 
