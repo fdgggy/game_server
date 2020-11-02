@@ -1,6 +1,6 @@
 .package {
 	type 0 : integer
-	session 1 : integer
+	session 1 : integer   #session 如果在序列化时不传，则不会有rpc的回应。
 }
 
 handshake 1 {
@@ -26,3 +26,21 @@ set 3 {
 }
 
 quit 4 {}
+
+.users {
+	userid 0 : integer
+	name 1 : string
+	level 2 : integer
+}
+
+game 5 {
+	request {
+		what 0 : string
+		value 1 : string
+		user 2 : *users
+	}
+	response {
+		status 0 : integer
+	}
+}
+

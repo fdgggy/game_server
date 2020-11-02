@@ -3,6 +3,7 @@ local socket = require "skynet.socket"
 local sproto = require "sproto"
 local sprotoloader = require "sprotoloader"
 local cluster = require "skynet.cluster"
+local print_r = require "print_r"
 
 local WATCHDOG
 local host
@@ -31,6 +32,14 @@ end
 
 function REQUEST:handshake()
 	return { msg = "Welcome to skynet, I will send heartbeat every 5 sec." }
+end
+
+function REQUEST:game(args)
+	print_r(self)
+	local proxy = cluster.proxy "game1@sdb"	-- cluster.proxy("db", "@sdb")
+	skynet.call(proxy, "lua", "GET2", self)
+
+	return { status = 200 }
 end
 
 function REQUEST:quit()
